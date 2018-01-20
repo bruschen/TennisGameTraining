@@ -66,11 +66,13 @@ namespace TennisGameTraining
             {
                 return $"Love_All";
             }
-            else if (this.HomePlayer.TennisCurrentScore == TennisScore.Forty)
+            else if (this.HomePlayer.TennisCurrentScore == TennisScore.Forty&&
+                     (this.HomePlayer.TennisCurrentScore-this.AwayPlayer.TennisCurrentScore>=2))
             {
                 return $"Home_Win";
             }
-            else if (this.AwayPlayer.TennisCurrentScore == TennisScore.Forty)
+            else if (this.AwayPlayer.TennisCurrentScore == TennisScore.Forty&&
+                    (this.AwayPlayer.TennisCurrentScore-this.HomePlayer.TennisCurrentScore>=2))
             {
                 return $"Away_Win";
             }
