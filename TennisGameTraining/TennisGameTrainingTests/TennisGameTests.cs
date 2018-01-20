@@ -11,35 +11,95 @@ namespace TennisGameTraining.Tests
     [TestClass()]
     public class TennisGameTests
     {
-        [TestMethod()]
-        public void Love_All()
+        public TennisPlayer HomePlayer{ get; set; }
+        public TennisPlayer AwayPlayer { get; set; }
+
+        private void InitialPlayer(TennisScore homeCurrentScore, TennisScore awayTennisScore)
         {
-            TennisGame tennisGame = new TennisGame();
+            this.HomePlayer = new TennisPlayer()
+                                          {
+                                              TennisPlayerType = TennisPlayerType.HomePlayer,
+                                              TennisCurrentScore = homeCurrentScore
+            };
+            this.AwayPlayer= new TennisPlayer()
+                                          {
+                                              TennisPlayerType = TennisPlayerType.AwayPlayer,
+                                              TennisCurrentScore = awayTennisScore
+            };
+        }
+
+        [TestMethod()]
+        public void Love_Love_None_Love_ALL()
+        {
+            this.InitialPlayer(TennisScore.Love, TennisScore.Love);
+            TennisGame tennisGame = new TennisGame(this.HomePlayer, this.AwayPlayer);
             var excepct = "Love_All";
             var actual = tennisGame.GetCurrentScore();
 
             Assert.AreEqual(excepct, actual);
         }
 
+        #region Love vs. Love
         [TestMethod]
-        public void Fiften_Love()
+        public void Love_Love_Home_Fiften_Love()
         {
-            TennisPlayer homePlayer = new TennisPlayer()
-                                          {
-                                              TennisPlayerType = TennisPlayerType.HomePlayer,
-                                              TennisCurrentScore = TennisScore.Love
-                                          };
-            TennisPlayer awayPlayer = new TennisPlayer()
-                                        {
-                                            TennisPlayerType = TennisPlayerType.AwayPlayer,
-                                            TennisCurrentScore = TennisScore.Love
-                                        };
+            this.InitialPlayer(TennisScore.Love, TennisScore.Love);
+            TennisGame tennisGame = new TennisGame(this.HomePlayer, this.AwayPlayer);
 
-            TennisGame tennisGame = new TennisGame(homePlayer, awayPlayer);
             var excepct = "Fiften_Love";
             var actual = tennisGame.GetCurrentScore(TennisPlayerType.HomePlayer);
 
             Assert.AreEqual(excepct, actual);
         }
+
+        [TestMethod()]
+        public void Love_Love_Away_Love_Fifty()
+        {
+            this.InitialPlayer(TennisScore.Love, TennisScore.Love);
+            TennisGame tennisGame = new TennisGame(this.HomePlayer, this.AwayPlayer);
+            var excepct = "Love_Fiften";
+            var actual = tennisGame.GetCurrentScore(TennisPlayerType.AwayPlayer);
+
+            Assert.AreEqual(excepct, actual);
+        }
+        #endregion
+
+        #region Fiften V.S. Love
+        [TestMethod]
+        public void Fiften_Love_Home_Thirty_Love()
+        {
+            this.InitialPlayer(TennisScore.Fiften, TennisScore.Love);
+            TennisGame tennisGame = new TennisGame(this.HomePlayer, this.AwayPlayer);
+            var excepct = "Thirty_Love";
+            var actual = tennisGame.GetCurrentScore(TennisPlayerType.HomePlayer);
+
+            Assert.AreEqual(excepct, actual);
+        }
+
+        [TestMethod]
+        public void Fiften_Love_Away_Fiften_Fiften()
+        {
+            this.InitialPlayer(TennisScore.Fiften, TennisScore.Love);
+
+            TennisGame tennisGame = new TennisGame(this.HomePlayer, this.AwayPlayer);
+            var excepct = "Fiften_Fiften";
+            var actual = tennisGame.GetCurrentScore(TennisPlayerType.AwayPlayer);
+
+            Assert.AreEqual(excepct, actual);
+        }
+        #endregion
+
+        [TestMethod]
+        public void Thirty_Love_Home_Home_Win()
+        {
+            this.InitialPlayer(TennisScore.Thirty, TennisScore.Love);
+            TennisGame tennisGame = new TennisGame(this.HomePlayer, this.AwayPlayer);
+            var excepct = "Home_Win";
+            var actual = tennisGame.GetCurrentScore(TennisPlayerType.HomePlayer);
+
+            Assert.AreEqual(excepct, actual);
+        }
+
+
     }
 }

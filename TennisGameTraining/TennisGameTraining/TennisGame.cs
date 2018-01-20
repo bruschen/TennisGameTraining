@@ -47,6 +47,14 @@ namespace TennisGameTraining
                 {
                     return TennisScore.Fiften;
                 }
+                else if (tennisPlayer.TennisCurrentScore == TennisScore.Fiften)
+                {
+                    return TennisScore.Thirty;
+                }
+                else if (tennisPlayer.TennisCurrentScore == TennisScore.Thirty)
+                {
+                    return TennisScore.Forty;
+                }
             }
 
             return tennisPlayer.TennisCurrentScore;
@@ -57,6 +65,10 @@ namespace TennisGameTraining
             if (this.HomePlayer.TennisCurrentScore == TennisScore.Love && this.AwayPlayer.TennisCurrentScore == TennisScore.Love)
             {
                 return $"Love_All";
+            }
+            else if (this.HomePlayer.TennisCurrentScore == TennisScore.Forty)
+            {
+                return $"Home_Win";
             }
             else
             {

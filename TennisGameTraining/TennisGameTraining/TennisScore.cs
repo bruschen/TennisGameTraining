@@ -11,14 +11,14 @@ namespace TennisGameTraining
     public enum TennisScore
     {
         [Description("Love")]
-        Love,
+        Love=0,
         [Description("Fiften")]
-        Fiften,
+        Fiften=1,
         [Description("Thirty")]
-        Thirty,
+        Thirty=2,
         [Description("Forty")]
-        Forty,
+        Forty=3,
         [Description("Advantage")]
-        Advantage,
+        Advantage=4,
     }
 }
