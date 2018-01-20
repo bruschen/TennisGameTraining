@@ -70,6 +70,10 @@ namespace TennisGameTraining
             {
                 return $"Home_Win";
             }
+            else if (this.AwayPlayer.TennisCurrentScore == TennisScore.Forty)
+            {
+                return $"Away_Win";
+            }
             else
             {
                 return $"{this.HomePlayer.TennisCurrentScore.ToString()}_{this.AwayPlayer.TennisCurrentScore.ToString()}";

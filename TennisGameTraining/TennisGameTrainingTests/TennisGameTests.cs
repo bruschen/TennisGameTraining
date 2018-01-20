@@ -112,6 +112,29 @@ namespace TennisGameTraining.Tests
         }
         #endregion
 
+        #region Fiften V.S. Thirty
+        [TestMethod]
+        public void Fiften_Thirty_Home_Thirty_Thirty()
+        {
+            this.InitialPlayer(TennisScore.Fiften, TennisScore.Thirty);
+            TennisGame tennisGame = new TennisGame(this.HomePlayer, this.AwayPlayer);
+            var excepct = "Thirty_Thirty";
+            var actual = tennisGame.GetCurrentScore(TennisPlayerType.HomePlayer);
+
+            Assert.AreEqual(excepct, actual);
+        }
+        [TestMethod]
+        public void Fiften_Thirty_Away_Away_Win()
+        {
+            this.InitialPlayer(TennisScore.Fiften, TennisScore.Thirty);
+            TennisGame tennisGame = new TennisGame(this.HomePlayer, this.AwayPlayer);
+            var excepct = "Away_Win";
+            var actual = tennisGame.GetCurrentScore(TennisPlayerType.AwayPlayer);
+
+            Assert.AreEqual(excepct, actual);
+        }
+        #endregion
+
         #region Thirty V.S. Love
         #endregion
 
