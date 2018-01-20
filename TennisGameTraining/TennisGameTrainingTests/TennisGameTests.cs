@@ -272,5 +272,51 @@ namespace TennisGameTraining.Tests
             Assert.AreEqual(excepct, actual);
         }
         #endregion
+
+        #region Forty V.S. Adv
+        [TestMethod]
+        public void Forty_Adv_Home_Deuce()
+        {
+            this.InitialPlayer(TennisScore.Forty, TennisScore.Adv);
+            TennisGame tennisGame = new TennisGame(this.HomePlayer, this.AwayPlayer);
+            var excepct = "Deuce";
+            var actual = tennisGame.GetCurrentScore(TennisPlayerType.HomePlayer);
+
+            Assert.AreEqual(excepct, actual);
+        }
+        [TestMethod]
+        public void Forty_Adv_Away_Away_Win()
+        {
+            this.InitialPlayer(TennisScore.Forty, TennisScore.Adv);
+            TennisGame tennisGame = new TennisGame(this.HomePlayer, this.AwayPlayer);
+            var excepct = "Away_Win";
+            var actual = tennisGame.GetCurrentScore(TennisPlayerType.AwayPlayer);
+
+            Assert.AreEqual(excepct, actual);
+        }
+        #endregion
+
+        #region Adv V.S. Forty
+        [TestMethod]
+        public void Adv_Forty_Home_Win()
+        {
+            this.InitialPlayer(TennisScore.Adv, TennisScore.Forty);
+            TennisGame tennisGame = new TennisGame(this.HomePlayer, this.AwayPlayer);
+            var excepct = "Home_Win";
+            var actual = tennisGame.GetCurrentScore(TennisPlayerType.HomePlayer);
+
+            Assert.AreEqual(excepct, actual);
+        }
+        [TestMethod]
+        public void Adv_Forty_Away_Deuce()
+        {
+            this.InitialPlayer(TennisScore.Adv, TennisScore.Forty);
+            TennisGame tennisGame = new TennisGame(this.HomePlayer, this.AwayPlayer);
+            var excepct = "Deuce";
+            var actual = tennisGame.GetCurrentScore(TennisPlayerType.AwayPlayer);
+
+            Assert.AreEqual(excepct, actual);
+        }
+        #endregion
     }
 }

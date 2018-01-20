@@ -20,5 +20,7 @@ namespace TennisGameTraining
         Forty=3,
         [Description("Adv")]
         Adv=4,
+        [Description("Win")]
+        Win = 5,
     }
 }

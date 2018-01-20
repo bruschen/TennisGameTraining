@@ -33,63 +33,81 @@ namespace TennisGameTraining
 
         public string GetCurrentScore(TennisPlayerType winnerPlayerType = TennisPlayerType.None)
         {
-            this.HomePlayer.TennisCurrentScore = this.PlayerScore(this.HomePlayer, winnerPlayerType);
-            this.AwayPlayer.TennisCurrentScore = this.PlayerScore(this.AwayPlayer, winnerPlayerType);
+            TennisScore homeTennisScore= this.PlayerScore(this.HomePlayer, this.AwayPlayer.TennisCurrentScore, winnerPlayerType);
+            TennisScore awayTennisScore= this.PlayerScore(this.AwayPlayer, this.HomePlayer.TennisCurrentScore, winnerPlayerType);
 
-            return this.ScoreDisplay();
+            return this.ScoreDisplay(homeTennisScore, awayTennisScore);
         }
 
-        private TennisScore PlayerScore(TennisPlayer tennisPlayer, TennisPlayerType winnerPlayerType)
+        private TennisScore PlayerScore(TennisPlayer tennisPlayer, TennisScore opponentScore, TennisPlayerType winnerPlayerType)
         {
+            TennisScore playerCurrentScore = tennisPlayer.TennisCurrentScore;
+
             if (tennisPlayer.TennisPlayerType == winnerPlayerType)
             {
                 if (tennisPlayer.TennisCurrentScore == TennisScore.Love)
                 {
-                    return TennisScore.Fiften;
+                    playerCurrentScore= TennisScore.Fiften;
                 }
                 else if (tennisPlayer.TennisCurrentScore == TennisScore.Fiften)
                 {
-                    return TennisScore.Thirty;
+                    playerCurrentScore = TennisScore.Thirty;
                 }
                 else if (tennisPlayer.TennisCurrentScore == TennisScore.Thirty)
                 {
-                    return TennisScore.Forty;
+                    playerCurrentScore = TennisScore.Forty;
+                }
+                else if (tennisPlayer.TennisCurrentScore == TennisScore.Forty &&
+                         opponentScore==TennisScore.Adv)
+                {   //Adv_Adv ==> deuce
+                    playerCurrentScore = TennisScore.Forty;
                 }
                 else if (tennisPlayer.TennisCurrentScore == TennisScore.Forty)
                 {
-                    return TennisScore.Adv;
+                    playerCurrentScore = TennisScore.Adv;
+                }
+                else if (tennisPlayer.TennisCurrentScore == TennisScore.Adv)
+                {
+                    playerCurrentScore = TennisScore.Win;
                 }
             }
-
-            return tennisPlayer.TennisCurrentScore;
+            else
+            {
+                if (tennisPlayer.TennisCurrentScore == TennisScore.Adv &&
+                         opponentScore == TennisScore.Forty)
+                {   //Adv_Adv ==> deuce
+                    playerCurrentScore = TennisScore.Forty;
+                }
+            }
+            return playerCurrentScore;
         }
 
-        private string ScoreDisplay()
+        private string ScoreDisplay(TennisScore homeTennisScore, TennisScore awayTennisScore)
         {
-            if (this.HomePlayer.TennisCurrentScore == TennisScore.Forty &&
-                     this.AwayPlayer.TennisCurrentScore == TennisScore.Forty)
+            if (homeTennisScore == TennisScore.Forty &&
+                awayTennisScore == TennisScore.Forty)
             {
                 return $"Deuce";
             }
-            else if (this.HomePlayer.TennisCurrentScore<TennisScore.Forty&&
-                     this.AwayPlayer.TennisCurrentScore<TennisScore.Forty&&
-                     this.HomePlayer.TennisCurrentScore == this.AwayPlayer.TennisCurrentScore )
+            else if (homeTennisScore < TennisScore.Forty&&
+                     awayTennisScore < TennisScore.Forty&&
+                     homeTennisScore == awayTennisScore)
             {
-                return $"{this.HomePlayer.TennisCurrentScore}_All";
+                return $"{awayTennisScore}_All";
             }
-            else if (this.HomePlayer.TennisCurrentScore >= TennisScore.Forty&&
-                     (this.HomePlayer.TennisCurrentScore-this.AwayPlayer.TennisCurrentScore>=2))
+            else if (homeTennisScore >= TennisScore.Forty&&
+                     (homeTennisScore - awayTennisScore >= 2))
             {
                 return $"Home_Win";
             }
-            else if (this.AwayPlayer.TennisCurrentScore >= TennisScore.Forty&&
-                    (this.AwayPlayer.TennisCurrentScore-this.HomePlayer.TennisCurrentScore>=2))
+            else if (awayTennisScore >= TennisScore.Forty&&
+                    (awayTennisScore - homeTennisScore >= 2))
             {
                 return $"Away_Win";
             }
             else
             {
-                return $"{this.HomePlayer.TennisCurrentScore.ToString()}_{this.AwayPlayer.TennisCurrentScore.ToString()}";
+                return $"{homeTennisScore.ToString()}_{awayTennisScore.ToString()}";
             }
         }
 
