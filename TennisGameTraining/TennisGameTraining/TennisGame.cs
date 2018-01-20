@@ -55,6 +55,10 @@ namespace TennisGameTraining
                 {
                     return TennisScore.Forty;
                 }
+                else if (tennisPlayer.TennisCurrentScore == TennisScore.Forty)
+                {
+                    return TennisScore.Adv;
+                }
             }
 
             return tennisPlayer.TennisCurrentScore;
@@ -62,16 +66,23 @@ namespace TennisGameTraining
 
         private string ScoreDisplay()
         {
-            if (this.HomePlayer.TennisCurrentScore == TennisScore.Love && this.AwayPlayer.TennisCurrentScore == TennisScore.Love)
+            if (this.HomePlayer.TennisCurrentScore == TennisScore.Forty &&
+                     this.AwayPlayer.TennisCurrentScore == TennisScore.Forty)
             {
-                return $"Love_All";
+                return $"Deuce";
             }
-            else if (this.HomePlayer.TennisCurrentScore == TennisScore.Forty&&
+            else if (this.HomePlayer.TennisCurrentScore<TennisScore.Forty&&
+                     this.AwayPlayer.TennisCurrentScore<TennisScore.Forty&&
+                     this.HomePlayer.TennisCurrentScore == this.AwayPlayer.TennisCurrentScore )
+            {
+                return $"{this.HomePlayer.TennisCurrentScore}_All";
+            }
+            else if (this.HomePlayer.TennisCurrentScore >= TennisScore.Forty&&
                      (this.HomePlayer.TennisCurrentScore-this.AwayPlayer.TennisCurrentScore>=2))
             {
                 return $"Home_Win";
             }
-            else if (this.AwayPlayer.TennisCurrentScore == TennisScore.Forty&&
+            else if (this.AwayPlayer.TennisCurrentScore >= TennisScore.Forty&&
                     (this.AwayPlayer.TennisCurrentScore-this.HomePlayer.TennisCurrentScore>=2))
             {
                 return $"Away_Win";

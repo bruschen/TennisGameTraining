@@ -18,7 +18,7 @@ namespace TennisGameTraining
         Thirty=2,
         [Description("Forty")]
         Forty=3,
-        [Description("Advantage")]
-        Advantage=4,
+        [Description("Adv")]
+        Adv=4,
     }
 }
