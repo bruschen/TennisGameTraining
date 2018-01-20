@@ -136,8 +136,6 @@ namespace TennisGameTraining.Tests
         #endregion
 
         #region Thirty V.S. Love
-        #endregion
-
         [TestMethod]
         public void Thirty_Love_Home_Home_Win()
         {
@@ -148,6 +146,17 @@ namespace TennisGameTraining.Tests
 
             Assert.AreEqual(excepct, actual);
         }
+        [TestMethod]
+        public void Thirty_Love_Away_Thirty_Fiften()
+        {
+            this.InitialPlayer(TennisScore.Thirty, TennisScore.Love);
+            TennisGame tennisGame = new TennisGame(this.HomePlayer, this.AwayPlayer);
+            var excepct = "Thirty_Fiften";
+            var actual = tennisGame.GetCurrentScore(TennisPlayerType.AwayPlayer);
+
+            Assert.AreEqual(excepct, actual);
+        }
+        #endregion
 
 
     }
